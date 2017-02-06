@@ -33,6 +33,7 @@ public class GardenerPlayer extends BasePlayer {
     static int settleTimer;
     static final int MAX_READ_SETTLE_PTS = 50;                  //Maximum number of settle pts read
     static int MAX_INIT_TREES = 2;                              //Max number of early game trees
+    static float MIN_SEPARATION_DIST = 23f;                     //If target is further than nf, start new local farm
     private ArrayList<Direction> current_available_slots = new ArrayList<>();
 
     //Reads current unit composition
@@ -739,6 +740,7 @@ public class GardenerPlayer extends BasePlayer {
             //if (blacklist.contains(newPt) || localBlacklist.contains(newPt)){
             if (localBlacklist.contains(newPt) || globalBlacklist.contains(newPt)) continue;
             float dist = newPt.distanceTo(MY_LOCATION);
+            if (dist > MIN_SEPARATION_DIST) continue;
             if (debug) rc.setIndicatorDot(newPt, 0, 255, 255);
             if (dist < mindist){
                 mindist = dist;
