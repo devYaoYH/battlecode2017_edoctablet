@@ -1,0 +1,46 @@
+First, an introduction. We're team E Doc Tablet!
+
+##Story
+The evil scourge that is Zombies have finally died off (what a cliche...really zombies again? that's so 2010). In the aftermath, autonomous machines are left to revive the galaxy's ecosystem from the devastations of war. Unfortunately, the over-competitive nature of the different robot factions have led to them destroying other factions more altruistic then they are in donating to the Robotic Wildlife Fund. Thus sets up the scene for battles (and peaceful farming) of epic proportions in this year's Battlecode!
+<div id="bulletTree" class="tab-pane active">
+    <h4>Bullet Trees</h4>
+    <p>Ok, it's not a robotic species, but an integral part of this year's game nonetheless...</p>
+    <p>These are the things that produce this year's resources - bullets! Your robots would use them for shooting, building other robots, and donating to the Robotic Wildlife Fund! Only a Gardener can plant these bullet trees and subsequently keep them healthy by watering them. As a tree produces bullets per turn based on how much health it currently has, keeping them healthy is an important task for Gardeners.</p>
+</div>
+<div id="archon" class="tab-pane">
+    <h4>The Archon</h4>
+    <p>Unlike previous years, losing the Archon doesn't mean imminent defeat for your team! The task of building most of the game's units has been offloaded to the Gardener robot, which means the Archon isn't as important as in previous years (it was the only robot capable of producing other robots).</p>
+    <p>That being said, it is still a crucial robot especially early game as it handles the important task of getting that first Gardener out (which can be tricky on certain maps...).</p>
+    (useful to waste enemy's bullets shooting them, results in opponent having a worse starting economy - that is, if you manage to spawn off a few gardeners before your Archon gets destroyed)
+</div>
+<div id="gardener" class="tab-pane">
+    <h4>Gardeners</h4>
+    <p>A cool feature for this year's game is the distributed nature of unit production. Each Gardener is like a stand-alone base of operations, complete with the ability to gain resources (plant bullet trees) and build other robotic units.</p>
+    <p>Even with the loss of the Archon, surviving Gardeners can continue the fight and eventually win!</p>
+</div>
+<div id="lumberjack" class="tab-pane">
+    <h4>Lumberjacks</h4>
+    <p>These are the short-range melee offensive units in the game. However, that isn't its main purpose - that of chopping down trees in its vicinity. Lumberjacks are mainly used to clear the area for Gardeners to plant bullet trees.</p>
+</div>
+<div id="scout" class="tab-pane">
+    <h4>Scouts</h4>
+</div>
+<div id="soldier" class="tab-pane">
+    <h4>Soldiers</h4>
+</div>
+<div id="tank" class="tab-pane">
+    <h4>TANKS!</h4>
+</div>
+<div id="bytecode" class="tab-pane">
+    <h4>Bytecodes</h4>
+    <p>For those not yet acquainted with Battlecode, each robot has a set amount of Bytecodes allocated each round of the game. Treat this as an upper limit of computational resources each robot can use per round.</p>
+    <p>In addition to basic operations taking up bytecodes, methods that allow robots to interact with the game engine - move, sense surroundings, broadcast messages - each cost a set amount of bytecodes. Writing efficient code that works within this set bytecode limit is a huge part of the challenge in Battlecode!</p>
+</div>
+#Strategy
+##Approach
+##Results
+
+#Thoughts
+
+
+#An OOP template to jump right into

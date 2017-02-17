@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>E Doc Tablet - Post Mortem</title>
+    <link rel="icon" href="img/logo.png">
+
+    <!-- Bootstrap Core CSS -->
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Theme CSS -->
+    <link href="css/clean-blog.css" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href="vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    Menu <i class="fa fa-bars"></i>
+                </button>
+                <a class="navbar-brand" href="index.html"><span><img class="img-circle" style="height:30px" src="img/logo.png"/></span>E Doc Tablet</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="nav-section">
+                        <a href="#intro">Intro</a>
+                    </li>
+                    <li class="nav-section">
+                        <a href="#strategy">Strategy</a>
+                    </li>
+                    <li class="nav-section">
+                        <a href="#thoughts">Thoughts</a>
+                    </li>
+                    <li class="nav-section">
+                        <a href="#template">TemplatePlayer</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+
+    <!-- Page Header -->
+    <!-- Set your background image for this header on the line below. -->
+    <header class="intro-header" style="background-image: url('img/battlecodeBannerCleanDarkened.png')">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <div class="post-heading">
+                        <h1>Occam's Coder</h1>
+                        <h2 class="subheading">Brainstorm many possible algorithms - then pick the stupidest that works!</h2>
+                        <span class="meta pull-right">- <a href="https://www.comp.nus.edu.sg/~stevenha/database/Art_of_Programming_Contest_SE_for_uva.pdf">Art of Programming Contest</a> Ahmed Shamsul Arefin</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Post Content -->
+    <article>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <div id="intro">
+
+                        <p class="section-heading page-init">First, an introduction. We're team <i>E Doc Tablet</i>! A trio of high school graduates with an enduring interest in programming...</p>
+
+                        <p>We managed to hit Top 8 for the seeding tournament but failed to make it into Top 16 for the finals (overall ranked <a href="https://www.battlecode.org/scrimmage/">#21</a> on auto-matchmaking server). Also, we somehow managed to clinch the <a href="strategy_reportv1.0.2.pdf">best strategy report</a> prize o.O although it's slightly outdated (a lot changes in a couple of days).</p>
+                        <p style="font-size: 80%;"><a href="#intro"><strong>Intro</strong></a> - We give a brief overview on the year's game for those not familiar with it.<br>
+                        <a href="#strategy"><strong>Strategy</strong></a> - An in-depth breakdown of the challenges in this year's Battlecode as well as a verbose discussion of the various strategies we (and other teams) implemented.<br>
+                        <a href="#thoughts"><strong>Thoughts</strong></a> - Skip ahead for the post mortem proper.<br>
+                        <a href="#template"><strong>TemplatePlayer</strong></a> - Improved examplefuncsplayer written in OOP style with basic functionality. Good for new players to extend upon! :D</p>
+
+                        <p>As this really isn't an intro to Battlecode 2017, but a post mortem/strategy report on our team's experience, let me point you to ><a href="http://s3.amazonaws.com/battlecode-releases-2017/releases/specs-1.6.2.html">the actual game specs</a>< this year. However, let's briefly set up the scene of this year's game to better place the following strategy discussion in context.</p>
+
+                        <h3>Story thus far...</h3>
+                        <p>The evil scourge that is Zombies have finally died off. In the aftermath, autonomous machines are left to revive the galaxy's ecosystem from the devastations of war. Unfortunately, the over-competitive nature of the different robot factions have led to them destroying other factions more altruistic then they are in donating to the Robotic Wildlife Fund. Thus sets up the scene for battles (and peaceful farming) of epic proportions in this year's Battlecode!</p>
+
+                        <h3>Game Elements</h3>
+                        <ul class="nav nav-tabs">
+                            <li class="active"><a href="#bytecode" data-toggle="tab"><img src="img/bytecodeIconInverseAlt.png"/></a></li>
+                            <li><a href="#bulletTree" data-toggle="tab"><img src="img/blue_bulletTree.png"/></a></li>
+                            <li><a href="#victoryPoints" data-toggle="tab"><img src="img/victoryIconBlueAlt.png"/></a></li>
+                        </ul>
+                        <div class="tab-content">
+                            <div id="bytecode" class="tab-pane active">
+                                <h4>Bytecodes</h4>
+                                <ul>
+                                    <li>Each robot has a set allocation of bytecodes per round.</li>
+                                    <li>Measure of computational resources taken up by a robot.</li>
+                                    <li>Sets an upper limit of how much computation a robot can make in a round.</li>
+                                    <li>Interactions by the robot with game engine (movement, sensing, broadcasting) all take up a set amount of bytecodes.</li>
+                                    <li>Writing efficient code that runs within this bytecode limit is a huge part of the challenge in Battlecode!</li>
+                                </ul>
+                            </div>
+                            <div id="bulletTree" class="tab-pane">
+                                <h4>Bullet Trees</h4>
+                                <ul>
+                                    <li>Produces resources - Bullets! per round scaled to its current health.</li>
+                                    <li>Health decays per round, maintained by Gardener robots 'watering' them.</li>
+                                    <li>Can only be planted by Gardener robots.</li>
+                                </ul>
+                            </div>
+                            <div id="victoryPoints" class="tab-pane">
+                                <h4>Victory Points!</h4>
+                                <ul>
+                                    <li>A measure of your bot's altruism.</li>
+                                    <li>Donate bullets to gain Victory Points (VP).</li>
+                                    <li>Instant win upon accumulating 1000 VPs!</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <h3>Robotic Species</h3>
+                        <ul class="nav nav-tabs">
+                            <li class="active"><a href="#archon" data-toggle="tab"><img style="height: 32px;" src="img/blue_archon.png"/></a></li>
+                            <li><a href="#gardener" data-toggle="tab"><img src="img/blue_gardener.png"/></a></li>
+                            <li><a href="#lumberjack" data-toggle="tab"><img src="img/blue_lumberjack.png"/></a></li>
+                            <li><a href="#scout" data-toggle="tab"><img src="img/blue_scout.png"/></a></li>
+                            <li><a href="#soldier" data-toggle="tab"><img src="img/blue_soldier.png"/></a></li>
+                            <li><a href="#tank" data-toggle="tab"><img style="height: 32px;" src="img/blue_tank.png"/></a></li>
+                        </ul>
+                        <div class="tab-content">
+                            <div id="archon" class="tab-pane active">
+                                <h4>The Archon</h4>
+                                <ul>
+                                    <li>Hire Gardener robots.</li>
+                                    <li>Fat - it's twice the radius of other robots.</li>
+                                    <li>Slow, basically it's not that useful a unit other than spawning gardeners.</li>
+                                    <li>Excellent bullet sponge early game!</li>
+                                    <li>Has twice the bytecode allowance of other robots, possible offloading of computation to Archons.</li>
+                                </ul>
+                            </div>
+                            <div id="gardener" class="tab-pane">
+                                <h4>Gardeners</h4>
+                                <ul>
+                                    <li>Builds the other types of robots.</li>
+                                    <li>Plant bullet trees! (accrue resources)</li>
+                                    <li>The ability to hire multiple Gardeners means that this year, unit production is more distributed.</li>
+                                    <li>Even with the Archon destroyed, surviving Gardeners can continue the fight and eventually win!</li>
+                                </ul>
+                            </div>
+                            <div id="lumberjack" class="tab-pane">
+                                <h4>Lumberjacks</h4>
+                                <ul>
+                                    <li>Short range melee offensive units. (AOE attack)</li>
+                                    <li>Slow movement - alas not that effective as an offensive unit...</li>
+                                    <li>Fret not! Main purpose of chopping down nearby neutral trees. (clearing obstacles)</li>
+                                    <li>Makes space for Gardeners to plant bullet trees!</li>
+                                </ul>
+                            </div>
+                            <div id="scout" class="tab-pane">
+                                <h4>Scouts</h4>
+                                <ul>
+                                    <li>The only 'Flying' unit! (able to traverse <i>on top of</i> trees)</li>
+                                    <li>Long sight radius, as its name suggests, good for scouting...</li>
+                                    <li>Weak attack, Low HP - Terrible front-line unit.</li>
+                                    <li>Good for getting behind enemy lines and disrupting economy. (harass)</li>
+                                </ul>
+                            </div>
+                            <div id="soldier" class="tab-pane">
+                                <h4>Soldiers</h4>
+                                <ul>
+                                    <li>Backbone of the army.</li>
+                                    <li>Able to fire multiple bullets in a single attack! (1/3/5)</li>
+                                    <li>Tough when amassed. (soldier ball)</li>
+                                    <li>Relatively high movement speed allows it to kite around the slower moving (though more powerful) tanks.</li>
+                                </ul>
+                            </div>
+                            <div id="tank" class="tab-pane">
+                                <h4>TANKS!</h4>
+                                <ul>
+                                    <li>Extremely high velocity bullets!</li>
+                                    <li>Also able to fire multiple bullets in a single attack. (1/3/5)</li>
+                                    <li>Slow, lumbering TANKS! Able to run over trees. (destroys them after some time)</li>
+                                    <li>High upfront cost (3x cost of soldier), balanced with a much higher HP and attack damage.</li>
+                                    <li>Sadly, not that frequently seen in games... (easily kited by faster moving soldiers)</li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <p>Battlecode is a competition where writing efficient hacks produce better results than tried and tested classical solutions. With the game engine already written, it's a whole lot like <i>Robotics</i>, more engineering than algorithmics. Given robust hardware and drivers pre-loaded, your task being filling up the software with AI magic :)</p>
+
+                    </div>
+
+                    <div class="page-section" id="strategy">
+                        <h2 class="section-heading page-header"><a href="#">Strategy</a></h2>
+                        <p>This year's game placed an emphasis on both aspects familiar to any RTS fan - <i>Micro</i> and <i>Macro</i>. A bot with good soldier dodging but bad economy will lose to one that prioritizes farming on large maps. A bot that picks the wrong time to invest in a strong economy will get swarmed early game by bots that rush on maps with a direct path between the two factions. Careful balancing and adaptation of the bot's behavior to the map was crucial for success against other teams.</p>
+                        <a href="img/sampleMatch3.png"><img src="img/sampleMatch3.png" class="rounded img-thumbnail img-fluid"/></a>
+                        <figcaption class="figure-caption text-right" style="margin-top:5px">Scene from a match played on the map <i>Chess</i></figcaption>
+
+                        <p>As can be seen in the above frame, this year's game also introduced a 'bullet hell'-esque combat on continuous space (robots in prior years travelled on a discrete grid). This meant that there were a lot more variation for movement and combat micro between the teams. Attacking wasn't hitscan (immediately hitting enemy upon acquiring valid target) anymore, which meant a good micro-code could turn the battle to your favor even against a larger force.</p>
+
+                        <h3>Micro</h3>
+                        <div class="row">
+                            <div class="col-sm-4"><a href="img/microCombat3v1.png"><img src="img/microCombat3v1.png" class="rounded img-thumbnail img-fluid"/></a>
+                            <figcaption class="figure-caption text-right" style="margin-top:5px">Game between Oak's Disciples(red) and 5th/6th(blue) during the final tournament</figcaption></div>
+
+                            <p class="col-sm-8" style="margin:0px;">That 1 red soldier took down 2 blue soldiers before sucumbing to the combined firepower of 5 blue soldiers. At the end of the competition, it was generally agreed that team Oak's Disciples had the best soldier micro code and could effortlessly win a 1v2 engagement against most other teams.</p>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-12" style="margin:0px;">
+                                <h4>Movement</h4>
+                            </div>
+                            <p class="col-sm-8" style="margin:0px;">Most teams settled into using some implementation of <a href="https://www.cs.cmu.edu/~motionplanning/lecture/Chap2-Bug-Alg_howie.pdf">bug pathing</a> to traverse the map with limited vision. On maps with a direct path between teams' starting locations, the team that had a better pathing algorithm would have had a better chance at rushing the opponent and winning the game.</p>
+                            <div class="col-sm-4"><a href="img/microPathing.png"><img src="img/microPathing.png" class="rounded img-thumbnail img-fluid"/></a>
+                            <figcaption class="figure-caption text-right" style="margin-top:5px">Soldiers from Waterloo Omega Ruby(red) navigating the paths on map <i>Moba</i> during the final tournament.</figcaption></div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-12" style="margin:0px;">
+                                <h4>Dodging</h4>
+                            </div>
+                            <p class="col-sm-8" style="margin:0px;">Dodging was often the critical factor in determining the outcome of early game soldier 2v2 fights. Here, our team's soldiers scans 8+1 directions (not moving is an option too) and picks out the highest-scoring direction to travel in. Things like getting hit by a bullet or straying into a lumberjack's strike radius will impose a penalty to the score. This will reduce that location's score and prevent our soldiers from travelling in that particular direction.</p>
+                            <div class="col-sm-4"><a href="img/microDodging.png"><img src="img/microDodging.png" class="rounded img-thumbnail img-fluid"/></a>
+                            <figcaption class="figure-caption text-right" style="margin-top:5px">Close quarters combat on <i>Arena</i>. Visualization: Yellow (good) <--> Red (bad)</figcaption></div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-12" style="margin:0px;">
+                                <h4>Shooting</h4>
+                            </div>
+                            <p class="col-sm-12" style="margin:0px;">Shooting is more complicated than simply calling a method to attack a certain grid coordinate. Rather, there were some interesting strategies for shooting this year - Tree Squatting, Sniping and Flickering.</p>
+                            <div class="col-sm-12" style="margin-top:15px;">
+                                <div class="col-sm-4"><a href="img/microTreeSquat.png"><img src="img/microTreeSquat.png" class="rounded img-thumbnail img-fluid"/></a>
+                                <figcaption class="figure-caption text-right" style="margin-top:5px">Red's scout rushes towards blue early game and kills the gardener from its perch on one of blue's bullet trees <a href="https://www.battlecode.org/tournaments/watch/SPRINT/1154">(Referenced Match)</a>.</figcaption></div>
+                                <div class="col-sm-4"><a href="img/microSniping.png"><img src="img/microSniping.png" class="rounded img-thumbnail img-fluid"/></a>
+                                <figcaption class="figure-caption text-right" style="margin-top:5px"><a href="https://www.battlecode.org/tournaments/watch/SEEDING/3815">Match</a> between 4th Place(red) and potato(blue). Red's tanks are shooting at a target well outside their sight radius.</figcaption></div>
+                                <div class="col-sm-4"><a href="img/microFlickering.png"><img src="img/microFlickering.png" class="rounded img-thumbnail img-fluid"/></a>
+                                <figcaption class="figure-caption text-right" style="margin-top:5px">Soldiers offset their shooting direction, cycling left/center/right/center.</figcaption></div>
+                            </div>
+                            <div class="col-sm-12">
+                                <p>Tree Squatting by scouts was a popular strategy in the Sprint tournament (first week of competition), to the point that those teams which don't implement such a strategy would most definitely lose to a team that does. After tweaking the scouts' HP and attack damage, this strategy fell out of popular use. However, scouts were still effective sneaking past enemy lines to harass those hard-to-get gardeners sitting amidst their hextet of trees.</p>
+                                <p>Sniping was another strategy made available through bullet hell combat. Due to the high velocity of a tank's bullets, some teams implemented a 'sniping' function to them. However, such a strategy was prone to friendly fire.</p>
+                                <p>A strategy that we implemented towards the end of the tournament was to offset our shots towards the intended target. Such a strategy spread out the cone of bullets wider and made it harder for the enemy to dodge our bullets.</p>
+                            </div>
+                        </div>
+
+                        <h3>Macro</h3>
+                        <p>Although playing on a continuous space introduced many new micro challenges, it's teams' macro that decided most games. Even with the best micro, a single soldier cannot stand up to a mass of 10 soldiers or a trio of tanks. With resources this year shared between building units, planting trees, and attacking, the careful managing of bullets was crucial to a team's success.</p>
+
+                        <p>Furthermore, the added win-condition of donating 1000VPs imposed added pressure on games. Teams had to decide whether they should go donate their bullets for VP or build offensive units to win by wiping out the enemy team. It's the ability to correctly discern the suitable strategy that attributed to top-teams' success.</p>
+
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="col-sm-offset-2 col-sm-4"><a href="img/cheeseLastMinuteDonation.png"><img src="img/cheeseLastMinuteDonation.png" class="rounded img-thumbnail img-fluid"/></a>
+                                <figcaption class="figure-caption text-right" style="margin-top:5px">In the closing rounds of an intense battle amidst a tight maze, team <a href="https://www.battlecode.org/tournaments/watch/SEEDING/3938">Arbitrary Graph</a> fails to donate their cache of bullets, allowing us to clinch the round of 3 :D</figcaption></div>
+                                <div class="col-sm-4"><a href="img/cheeseDontPanic.png"><img src="img/cheeseDontPanic.png" class="rounded img-thumbnail img-fluid"/></a>
+                                <figcaption class="figure-caption text-right" style="margin-top:5px">Team <a href="https://www.battlecode.org/tournaments/watch/QUALIFYING/3433">Don't Panic</a> keeps their cool even when they break the client by stockpiling too many bullets...</figcaption></div>
+                            </div>
+                        </div>
+                        <p>The tie-break condition of VPs also resulted in a number of hilarious situations in matches...One should always donate in the last few rounds of a match to avoid such embarrassing situations :P</p>
+
+                        <div class="row">
+                            <div class="col-sm-12" style="margin:0px;">
+                                <h4>Farming</h4>
+                            </div>
+                            <p class="col-sm-12" style="margin-top:0px;">Planting bullet trees was a critical component in this year's game (it's about reviving the ecosystem afterall). The layout to plant trees had a large impact on the bot's performance in matches. Main considerations teams had to take into account when choosing a farming layout were <i>density</i>, <i>speed</i>, and <i>space</i>.</p>
+                            
+                            <div class="col-sm-4"><a href="img/farmLayout_dispersedFlowers.png"><img src="img/farmLayout_dispersedFlowers.png" class="rounded img-thumbnail img-fluid"/></a>
+                            <figcaption class="figure-caption text-right" style="margin-top:5px">Easiest to implement hexagonal 'flowers' spread out in a dispersed manner.</figcaption></div>
+                            <p class="col-sm-8" style="margin-top:0px;">Naive 'flowers' scored high in the density metric - with a 1:6 gardener to tree ratio. However, they required a suitable clearing and if not implemented properly, could lead to congestion around the archon, preventing further spawning of gardeners and stalling economic growth. It also took some time for gardeners to find a suitable clearing before planting trees.</p>
+
+                            <div class="col-sm-4"><a href="img/farmLayout_dispersedHexagons.png"><img src="img/farmLayout_dispersedHexagons.png" class="rounded img-thumbnail img-fluid"/></a>
+                            <figcaption class="figure-caption text-right" style="margin-top:5px">A popular strategy utilized by top teams during sprint tournament was the 'sparse-forest' layout.</figcaption></div>
+                            <p class="col-sm-8" style="margin-top:0px;">'Sparse-forest' solved many of the problems faced by naive 'flowers', chiefly speed. The sparse layout was more flexible as it didn't require as much space as a flower. Such a strategy worked best on dense maps and offered an early game economic advantage as the team could plant trees even in tight corners where a flower design would fail. However, it fell out of use towards the seeding tournament as units moved slower and the early game advantage offered by such a layout didn't offset its vastly lower gardener to tree ratio.</p>
+
+                            <div class="col-sm-4"><a href="img/farmLayout_orderedFlowers.png"><img src="img/farmLayout_orderedFlowers.png" class="rounded img-thumbnail img-fluid"/></a>
+                            <figcaption class="figure-caption text-right" style="margin-top:5px">Arranging 'flowers' in a bigger hexagonal grid offered an improvement in efficiency.</figcaption></div>
+                            <p class="col-sm-8" style="margin-top:0px;">A layout that saw widespread use towards the end of the competition was the 'ordered flowers'. A grid was overlayed atop the map to provide gardeners coordinates to spread out individual 'flowers'. Such a system allowed for gardeners to speedily find their target location without congestion and preserved the density of a 'flowers' layout. Even though it took a while to get started (clearing sufficient space), by this time, unit speeds were cut in half so games moved a lot slower and such a strategy was favored.</p>
+
+                            <p class="col-sm-12" style="margin-top:0px;">Here, teams had the most visually obvious differences in their strategies. With the basic 3 layouts described above, many teams added their own flair to farming. Be it an expanded circle of trees, trees in a box around the gardener or a funky elipse, teams had varying implementations of planting trees.</p>
+
+                            <p class="col-sm-8" style="margin-top:0px;">In order to have sufficient space to build large tanks, some teams opted to expand the circle of trees around the gardener. For instance, team <i>Yggdrasil</i> fit a ring of 7 trees with a clearing for building tanks around their gardeners. Although such a strategy allowed teams to quickly build tanks, we found that early game tanks weren't as efficient as a bunch of more manoeuvrable soldiers (since early game usually meant lots of neutral trees lying around).</p>
+                            <div class="col-sm-4"><a href="img/macroFlowerTank.png"><img src="img/macroFlowerTank.png" class="rounded img-thumbnail img-fluid"/></a>
+                            <figcaption class="figure-caption text-right" style="margin-top:5px">Team <a href="https://www.battlecode.org/tournaments/watch/SEEDING/3891">Yggdrasil</a> had an enlarged circle of bullet trees, allowing space to spawn tanks!</figcaption></div>
+                            
+                            <p class="col-sm-8" style="margin-top:0px;">Probably the signature of <i>Team Rocket</i> is their unique eliptical farming layout. It might be entirely for its aesthetic appeal, however, we believe there's some strategy involved here. Planting the lower half of the elipse (4 trees) did not require too much space and hence can be done quickly early game. Once nearby forests have been thined out by lumberjacks, gardeners could expand to the 8-tree eliptical layout. This allowed for a denser layout without sacrificing too much speed.</p>
+                            <div class="col-sm-4"><a href="img/macroTeamRocket.png"><img src="img/macroTeamRocket.png" class="rounded img-thumbnail img-fluid"/></a>
+                            <figcaption class="figure-caption text-right" style="margin-top:5px"><a href="https://www.battlecode.org/tournaments/watch/SEEDING/3975">Team Rocket</a> had a unique elliptical layout for farming...</figcaption></div>
+
+                            <p class="col-sm-8" style="margin-top:0px;">A strategy we toyed around with before the seeding tournament was a hybrid between 'flowers' and 'sparse-forest'. Starting out with a 'sparse-forest' and with the right spacing, one could achieve a dense hexagonal packing similar to 'flowers'. Here, sections of the farm remains in a sparse layout with individual gardeners transiting to a 'flowers' layout once it senses a clearing. However, we weren't able to iron out issues with congestion before the tournament, hence reverting to a more stable 'ordered-grid' layout.</p>
+                            <div class="col-sm-4"><a href="img/farmLayout_orderedConflation.png"><img src="img/farmLayout_orderedConflation.png" class="rounded img-thumbnail img-fluid"/></a>
+                            <figcaption class="figure-caption text-right" style="margin-top:5px">Our hybrid between flowers and a sparse-forest layout.</figcaption></div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-12" style="margin:0px;">
+                                <h4>Unit Composition</h4>
+                            </div>
+
+                            <p class="col-sm-12" style="margin-top:0px;">The composition of offensive units is often the crux of a team's strategy. The choice of building tanks or soldiers would fundamentally alter the team's macro. After the sprint tournament, our team simply stopped building scouts as offensive units. Rather, once we sense neutral trees with bullets, a single scout is built to gather those bullets for an economic advantage. Although the majority of teams went with a soldier-centric build, some teams had other ideas...</p>
+
+                            <p class="col-sm-8" style="margin-top:0px;"><i>Many Interesting Titrations</i> was perhaps one of the more successful teams to optimize the early game tank rush. Their ability to consistently churn out tanks before round 200 won them quite a few games. Ultimately, well implemented soldiers that were more agile defeated their tank strategy.</p>
+                            <div class="col-sm-4"><a href="img/macroTanks.png"><img src="img/macroTanks.png" class="rounded img-thumbnail img-fluid"/></a>
+                            <figcaption class="figure-caption text-right" style="margin-top:5px"><a href="https://www.battlecode.org/tournaments/watch/SEEDING/3843">Many Interesting Titrations</a> focused on rushing out tanks as early as round 200.</figcaption></div>
+
+                            <p class="col-sm-8" style="margin:0px;">Team <i>test bot please ignore</i> had a slightly different strategy in mind...By purely building lumberjacks, there were able to clear dense maps quickly and rapidly build up their economy. Furthermore, by arranging their lumberjacks in a gas-like cloud, they avoided friendly fire and effectively utilized their AOE attacks. The gas cloud was pretty tough to get through - that is, if your soldiers didn't avoid lumberjacks. Although an interesting strategy, soldiers with superior range will triumph after some time.</p>
+                            <div class="col-sm-4"><a href="img/macroTestBot.png"><img src="img/macroTestBot.png" class="rounded img-thumbnail img-fluid"/></a>
+                            <figcaption class="figure-caption text-right" style="margin-top:5px">Team <a href="https://www.battlecode.org/tournaments/watch/SEEDING/3793">test bot</a> exclusively spawned lumberjacks and used them to visualize a gas simulation.</figcaption></div>
+                        </div>
+
+                        <p>Aside from Tanks and Lumberjacks, you really only have left Soldiers...With the reduced HP and damage of Scouts, most teams chose to build a force of soldiers as their main combat unit. A popular hybrid strategy would go somthing like early game scouts to harass after an initial 2-soldier spawn followed by building tanks late game.</p>
+                        <p>That all important 2-soldier initial spawn decided a large number of games with a clear path between the two teams. Spawning scouts after the initial engagement allowed teams to get a leg-up on building their economy. The scouts would delay their opponent's economic growth through assassinating enemy gardeners. Tanks were more powerful than soldiers, but only if they can get close enough. Even so, tanks are more economically efficient than soldiers, thus building them late game when your economy can support their high cost would overwhelm an enemy force composed of purely soldiers.</p>
+
+                        <div class="row">
+                            <div class="col-sm-12" style="margin:0px;">
+                                <h4>Communication</h4>
+                            </div>
+                            <div class="col-sm-4"><a href="img/soldier_dispersion.png"><img src="img/soldier_dispersion.png" class="rounded img-thumbnail img-fluid"/></a>
+                            <figcaption class="figure-caption text-right" style="margin-top:5px">After an engagement, soldiers disperse to scout previously unvisited locations. White dots mark the targeted locations of individual soldiers, while green lines indicate their direction of travel.</figcaption></div>
+                            <div class="col-sm-8">
+                                <p style="margin:0px;">As individual robots do not share their field of vision, communicating between robots is crucial to have strategic cohesion. This year, teams each had a global shared array which was persistent through a match and could be read from/written to by each robot.</p>
+                                <p>Thus we implemented the <i>Broadcaster</i> system - serialized 2D grids persistent in the global array. Each grid took up 400 channels (elements) and could store 32bits (integer-sized) of information per 10x10 grid square on the match map.</p>
+                            </div>
+                            <p class="col-sm-12" style="margin-top:0px;">With a persistent grid in place, we could run classic BFS algo to find unvisited locations to scout as well as store reports in each grid's memory. A possible improvement upon our current system is to run BFS in a distributed manner (using all soldiers' spare bytecodes for instance). Furthermore, not every soldier had to run their individual BFS, a single scan would be sufficient to find the perimeter of unvisited locations for them to scout (after scoring each for closest distance perhaps).</p>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-4"><a href="img/soldier_enemySpotted.png"><img src="img/soldier_enemySpotted.png" class="rounded img-thumbnail img-fluid"/></a>
+                            <figcaption class="figure-caption text-right" style="margin-top:5px">When an enemy is spotted, combat units converge upon its location.</figcaption></div>
+                            <p class="col-sm-8" style="margin:0px;">The capability to encode location information together with map information allowed us to queue reports to the global array. Combat units pull from this queue to determine their target location which result in behaviors such as them converging upon a recently spotted enemy or rushing back to defend a gardener under attack.</p>
+                        </div>
+
+                        <h3>Soldier Tactics</h3>
+                        <p>After post-sprint tournament balancing updates, soldiers sprang into focus for many bots. Their high firepower and maneuverability made them the choice combat unit. Therefore, we focused much of our later development on improving our soldier's combat capabilities. We even created a <a href="maps/MicroTest_Soldiers_50.map17">map</a> with 50 soldiers a side to simulate large-scale engagements and evaluate our soldier micro.</p>
+
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="col-sm-offset-2 col-sm-4"><a href="img/soldier_spreadingOut.png"><img src="img/soldier_spreadingOut.png" class="rounded img-thumbnail img-fluid"/></a>
+                                <figcaption class="figure-caption text-right" style="margin-top:5px">Red's soldiers at the back deflecting towards the sides.</figcaption></div>
+                                <div class="col-sm-4"><a href="img/soldier_effectiveSurround.png"><img src="img/soldier_effectiveSurround.png" class="rounded img-thumbnail img-fluid"/></a>
+                                <figcaption class="figure-caption text-right" style="margin-top:5px">The red soldier ball manages to form an effective surround on blue and wins the engagement.</figcaption></div>
+                            </div>
+                        </div>
+
+                        <p>Two main improvements we implemented for our soldiers were <i>squishing</i> and <i>target-scoring</i>. When two soldier balls engage, the side that won often is the side that can get more soldiers to the front and fire upon the enemy. Thus we added some code to make soldiers at the back of the soldier ball deflect towards the sides, thereby spreading out and behaving very much like when a (compressible) ball is squished...</p>
+
+                        <div class="row">
+                            <div class="col-sm-4"><a href="img/soldier_multipleFronts.png"><img src="img/soldier_multipleFronts.png" class="rounded img-thumbnail img-fluid"/></a>
+                            <figcaption class="figure-caption text-right" style="margin-top:5px">The force of red soldiers splitting up to engage multiple enemy targets.</figcaption></div>
+                            <p class="col-sm-8" style="margin:0px;">With our <i>Broadcaster</i> communication system in place, target scoring was pretty easy to implement. Iterating through the queue of reports and scoring each based on encoded enemy information as well as distance to target location allowed for such emergent behavior to manifest. A group of soldiers will naturally spread out and engage on multiple fronts as enemy numbers are diminished.</p>
+                        </div>
+
+                    </div>
+                    
+                    <div class="page-section" id="thoughts">
+                        <h2 class="section-heading page-header"><a href="#">Thoughts</a> <small>- in progress</small></h2>
+                        <p>A month may seem to be a looong time...Not the case for Battlecode! One has to develop basic functionality for each robot - movement, making sense of surroundings, communicating between robots - before going on to implement hueristics for macro gameplay.</p>
+
+                        <p>Abstract the AI! In other words, separate the main robot logic/boilerplate code from any decision making code. Doing so would allow your AI to be more flexible and makes it faster for you to edit strategy changes as the game meta evolves through the competition.</p>
+
+                        <pre class="prettyprint">
+    if (spawnSoldierControl() && !has_built_robot) {
+        has_built_robot = forceBuilding(RobotType.SOLDIER);
+        if (has_built_robot) soldierTimer = rc.getRoundNum() + SOLDIER_DELAY;
+    }
+                        </pre>
+                        <figcaption class="figure-caption text-right">Excerpt from our GardenerPlayer - A section of its spawning logic</figcaption>
+
+                        <p>It is simply a matter of encapsulating the conditions for spawning soldiers in its own function. This would keep the AI's decision-making layer abstracted from the main logic of GardenerPlayer.</p>
+
+                        <pre class="prettyprint">
+    private boolean spawnSoldierControl(){
+        if (rc.getTeamBullets() < RobotType.SOLDIER.bulletCost) return false;
+        if (rc.getRoundNum() < MID_GAME &&  !enemyEngaged) return false;
+        ...
+        return true;
+    }
+                        </pre>
+                        <figcaption class="figure-caption text-right">The control function for spawning soldiers</figcaption>
+                    </div>
+                    
+                    <div class="page-section" id="template">    
+                        <h2 class="section-heading page-header"><a href="#">An OOP template to jump right into <small>- in progress</small></a></h2>
+
+                        <pre class="prettyprint">
+public strictfp class RobotPlayer {
+
+    static BasePlayer curPlayer = null;
+
+    public static void run(RobotController rc) throws GameActionException {
+        while(true) {
+            try {
+                switch (rc.getType()) {
+                    case ARCHON:
+                        //Initializing type-specific robot player
+                        curPlayer = new ArchonPlayer(rc);
+                        break;
+                    ...
+                }
+            } catch (Exception e){
+                e.printStackTrace();
+            }
+            ...
+                        </pre>
+                        <p>
+                            Using this structure allows for robots to inherit common code being executed in higher-level classes of robots (BasePlayer/CombatPlayer classes for TemplatePlayer's implementation). This enables your robots to have a common set of executable code being run at the start/end of a round for easy maintenance.
+                        </p>
+                        <pre class="prettyprint">
+public class SoldierPlayer extends CombatPlayer {
+
+    public SoldierPlayer(RobotController robot) throws GameActionException {
+        super(robot);
+        runRobot();
+    }
+
+    public void runRobot() throws GameActionException {
+        init();
+        for (; ; Clock.yield()){
+            try{
+                startRound();
+                run();
+                endRound();
+            } catch(Exception e){
+                e.printStackTrace();
+            }
+            ...
+                        </pre>
+                        <figcaption class="figure-caption text-right">The skeleton of a type-specific robot code.</figcaption>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </article>
+
+    <hr>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <ul class="list-inline text-center">
+                        <li>
+                            <a href="https://www.battlecode.org/">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fa fa-stack-1x icon-battlecode"></i>
+                                </span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://github.com/devYaoYH/battlecode2017_edoctablet">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                        </li>
+                    </ul>
+                    <p class="copyright text-muted">Till next we meet on the maps of Battlecode! - <i>E Doc Tablet</i></p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- jQuery -->
+    <script src="vendor/jquery/jquery.min.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+
+    <!-- Pretty Code -->
+    <script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
+
+    <!-- Template js -->
+    <script src="js/clean-blog.min.js"></script>
+
+</body>
+
+</html>
