@@ -1,5 +1,5 @@
 # battlecode2017_edoctablet
-## Look out for an incomming post-mortem/strategy report here :)
+## [Post Mortem Blog](https://devyaoyh.github.io/battlecode2017_edoctablet/)
 In the meantime, feel free to look through our code (in order of development):
 - endor
 - dantooine
